@@ -4,6 +4,7 @@ import com.bonitasoft.engine.dsl.process.DataType.Companion.boolean
 import com.bonitasoft.engine.dsl.process.DataType.Companion.integer
 import com.bonitasoft.engine.dsl.process.DataType.Companion.string
 import com.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.contract
+import com.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.dataRef
 import com.bonitasoft.engine.dsl.process.process
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -54,8 +55,8 @@ class Config {
             transitions {
                 start to review
                 review to gate
-                (gate to sign).condition { dataRef("accepted") }
-                (gate to notify).isDefault()
+                gate to sign withCondition dataRef("accepted")
+                default from gate to notify
             }
 
         }
