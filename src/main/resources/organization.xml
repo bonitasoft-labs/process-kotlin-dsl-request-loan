@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organization:Organization xmlns:organization="http://documentation.bonitasoft.com/organization-xml-schema">
+    <users>
+        <user userName="john">
+            <password encrypted="false">bpm</password>
+            <firstName>John</firstName>
+            <lastName>Doe</lastName>
+            <professionalData>
+                <email>john.doe@acme.com</email>
+            </professionalData>
+        </user>
+        <user userName="jack">
+            <password encrypted="false">bpm</password>
+            <firstName>Jack</firstName>
+            <lastName>Doe</lastName>
+            <professionalData>
+                <email>jack.doe@acme.com</email>
+            </professionalData>
+        </user>
+        <user userName="james">
+            <password encrypted="false">bpm</password>
+            <firstName>James</firstName>
+            <lastName>Doe</lastName>
+            <professionalData>
+                <email>james.doe@acme.com</email>
+            </professionalData>
+        </user>
+    </users>
+    <roles>
+        <role name="member">
+            <displayName>Member</displayName>
+        </role>
+    </roles>
+    <groups>
+        <group name="validators">
+            <displayName>Validators</displayName>
+            <description>Validate the loan requests</description>
+        </group>
+        <group name="requesters">
+            <displayName>Requesters</displayName>
+            <description>Can start loan requests</description>
+        </group>
+    </groups>
+    <memberships>
+        <membership>
+            <userName>john</userName>
+            <roleName>member</roleName>
+            <groupName>requesters</groupName>
+        </membership>
+        <membership>
+            <userName>jack</userName>
+            <roleName>member</roleName>
+            <groupName>validators</groupName>
+        </membership>
+        <membership>
+            <userName>james</userName>
+            <roleName>member</roleName>
+            <groupName>validators</groupName>
+        </membership>
+    </memberships>
+</organization:Organization>
