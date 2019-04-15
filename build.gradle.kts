@@ -4,7 +4,6 @@ plugins {
     id("org.springframework.boot") version "2.1.4.RELEASE"
     id("org.jetbrains.kotlin.jvm") version "1.3.21"
     id("org.jetbrains.kotlin.plugin.spring") version "1.3.21"
-//    id("io.spring.dependency-management") version "1.0.7.RELEASE"
 }
 
 repositories {
@@ -21,10 +20,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.github.microutils:kotlin-logging:1.6.24")
-    //force hibernate to hibernate 4
-    implementation("org.hibernate:hibernate-core:4.3.11.Final")
-    implementation("org.hibernate:hibernate-entitymanager:4.3.11.Final")
-    implementation("org.hibernate.common:hibernate-commons-annotations:4.0.5.Final")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.1.4.RELEASE")
     testImplementation("junit:junit:4.12")
