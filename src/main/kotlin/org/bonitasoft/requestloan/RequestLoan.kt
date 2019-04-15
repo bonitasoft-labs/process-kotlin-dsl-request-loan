@@ -1,10 +1,16 @@
 package org.bonitasoft.requestloan
 
+import bonita.connector.email.email
 import org.bonitasoft.engine.dsl.process.DataType.Companion.boolean
 import org.bonitasoft.engine.dsl.process.DataType.Companion.integer
 import org.bonitasoft.engine.dsl.process.DataType.Companion.string
+import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.constant
 import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.contract
 import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.dataRef
+import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.groovy
+import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.parameter
+import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.startedBy
+import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.stringSubstitution
 import org.bonitasoft.engine.dsl.process.Process
 import org.bonitasoft.engine.dsl.process.ProcessConfiguration
 import org.bonitasoft.engine.dsl.process.configuration
@@ -41,6 +47,7 @@ class RequestLoan : BonitaProcessBuilder {
             actor = validator
             contract {
                 boolean named "accept" withDescription "whether the load is accepted or not"
+                boolean named "reason" withDescription "whether the load is accepted or not"
             }
             operations {
                 update("accepted").with(contract("accept"))
@@ -51,6 +58,27 @@ class RequestLoan : BonitaProcessBuilder {
             actor = requester
         }
         val notify = automaticTask("Notify reject") {
+            connector {
+                email {
+                    smtpHost(parameter("smtpHost"))
+                    smtpPort(parameter("smtpPrt"))
+                    from(constant("no-reply@acme.com"))
+                    to(groovy("startedBy.contactData.email") {
+                        startedBy
+                    })
+                    subject(constant("Your loan was rejected"))
+                    message(stringSubstitution("""
+                        |
+                        | We are sorry to inform you that your Loan was rejected because:
+                        | $\{reason}
+                        |
+                        | Thank you
+                        |
+                    """.trimMargin()) {
+                        dataRef("reason")
+                    })
+                }
+            }
         }
         transitions {
             start to review
@@ -69,6 +97,10 @@ class RequestLoan : BonitaProcessBuilder {
             "validator" to {
                 group("validators")
             }
+        }
+        parameters {
+            "smtpHost" to "localhost"
+            "smtpPort" to "2525"
         }
     }
 }
