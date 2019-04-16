@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*
 class TaskController(val apiClient: APIClient) {
 
     @GetMapping("/tasks")
-    fun list(): SearchResult<HumanTaskInstance>? {
-        return apiClient.processAPI.searchMyAvailableHumanTasks(apiClient.session.userId, SearchOptionsBuilder(0, 100).done())
+    fun list(): List<HumanTaskInstance>? {
+        return apiClient.processAPI.searchMyAvailableHumanTasks(apiClient.session.userId, SearchOptionsBuilder(0, 100).done()).result
     }
 
     @PostMapping("/task/{id}")
