@@ -1,0 +1,93 @@
+{
+  "designerVersion" : "1.9.23",
+  "id" : "pbRadioButtons",
+  "name" : "Radio Buttons",
+  "lastUpdate" : 1553096330740,
+  "template" : "<div ng-class=\"{\n    'form-horizontal': properties.labelPosition === 'left' && !properties.labelHidden,\n    'row': properties.labelPosition === 'top' && !properties.labelHidden || properties.labelHidden\n    }\">\n    <div class=\"form-group\">\n        <label\n            ng-if=\"!properties.labelHidden\"\n            ng-class=\"{ 'control-label--required': properties.required }\"\n            class=\"control-label col-xs-{{ !properties.labelHidden && properties.labelPosition === 'left' ? properties.labelWidth : 12 }}\">\n        {{ properties.label | uiTranslate }}\n        </label>\n        <div class=\"col-xs-{{ 12 - (!properties.labelHidden && properties.labelPosition === 'left' ? properties.labelWidth : 0) }}\">\n            <label ng-if=\"properties.inline\" class=\"radio-inline\" ng-repeat=\"option in properties.availableValues track by $index\">\n                <input\n                    type=\"radio\"\n                    name=\"{{ctrl.name}}\"\n                    ng-model=\"properties.selectedValue\"\n                    ng-value=\"ctrl.getValue(option)\"\n                    ng-required=\"properties.required\"\n                    ng-disabled=\"properties.disabled\">\n                {{ (ctrl.getLabel(option) || option) | uiTranslate }}\n            </label>\n\n            <div ng-if=\"!properties.inline\" class=\"radio\" ng-repeat=\"option in properties.availableValues track by $index\">\n                <label>\n                    <input\n                        type=\"radio\"\n                        name=\"{{ctrl.name}}\"\n                        ng-model=\"properties.selectedValue\"\n                        ng-value=\"ctrl.getValue(option)\"\n                        ng-required=\"properties.required\"\n                        ng-disabled=\"properties.disabled\">\n                    {{ (ctrl.getLabel(option) || option) | uiTranslate }}\n                </label>\n            </div>\n        </div>\n        <div ng-messages=\"$form[ctrl.name].$dirty && $form[ctrl.name].$error \" ng-messages-include=\"forms-generic-errors.html\" role=\"alert\"></div>\n    </div>\n</div>\n",
+  "icon" : "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 20'><g><path fill='#fff' d='M18,10.7C17.1,1.6,31,0.2,32,9.3C32.9,18.4,19,19.8,18,10.7z M16,10c0,5,4,9,9,9s9-4,9-9s-4-9-9-9 S16,5,16,10z M21,10c0,2.2,1.8,4,4,4s4-1.8,4-4s-1.8-4-4-4S21,7.8,21,10z'/></g></svg>",
+  "controller" : "function PbRadioBoxCtrl($scope, $parse, $log, widgetNameFactory) {\n\n  'use strict';\n  var ctrl = this;\n  /**\n   * Watch the data source and set wrapChoices and $scope.properties.values\n   */\n  function comparator(initialValue, item) {\n    return angular.equals(initialValue, ctrl.getValue(item));\n  }\n\n  function createGetter(accessor) {\n    return accessor && $parse(accessor);\n  }\n\n  this.getLabel = createGetter($scope.properties.displayedKey) || function (item) {\n    return typeof item === 'string' ? item : JSON.stringify(item);\n  };\n  this.getValue = createGetter($scope.properties.returnedKey) || function (item) {\n    return item;\n  };\n\n  $scope.$watchCollection('properties.availableValues', function(items){\n    if (Array.isArray(items)) {\n      var foundValue = items\n        .filter(comparator.bind(null, $scope.properties.selectedValue))\n        .reduce(function (acc, item) {\n          return ctrl.getValue(item);\n        }, undefined);\n      if (foundValue) {\n        $scope.properties.selectedValue = foundValue;\n      }\n    }\n  });\n\n  this.name = widgetNameFactory.getName('pbRadioBox');\n\n  if (!$scope.properties.isBound('selectedValue')) {\n    $log.error('the pbRadioBox property named \"selectedValue\" need to be bound to a variable');\n  }\n}\n",
+  "description" : "Set of buttons for mutually exclusive options. The user selects one option",
+  "custom" : false,
+  "order" : 8,
+  "properties" : [ {
+    "label" : "Read-only",
+    "name" : "disabled",
+    "type" : "boolean",
+    "defaultValue" : false,
+    "bond" : "expression"
+  }, {
+    "label" : "Required",
+    "name" : "required",
+    "help" : "In the context of a form container, use $form.$invalid as a Boolean to check form validity in a widget property",
+    "type" : "boolean",
+    "defaultValue" : false,
+    "bond" : "expression"
+  }, {
+    "label" : "Label hidden",
+    "name" : "labelHidden",
+    "type" : "boolean",
+    "defaultValue" : false,
+    "bond" : "constant"
+  }, {
+    "label" : "Label",
+    "name" : "label",
+    "showFor" : "properties.labelHidden.value === false",
+    "type" : "text",
+    "defaultValue" : "Default label",
+    "bond" : "interpolation"
+  }, {
+    "label" : "Label position",
+    "name" : "labelPosition",
+    "showFor" : "properties.labelHidden.value === false",
+    "type" : "choice",
+    "defaultValue" : "top",
+    "choiceValues" : [ "left", "top" ],
+    "bond" : "constant"
+  }, {
+    "label" : "Label width",
+    "name" : "labelWidth",
+    "showFor" : "properties.labelHidden.value === false",
+    "type" : "integer",
+    "defaultValue" : 4,
+    "bond" : "constant",
+    "constraints" : {
+      "min" : "1",
+      "max" : "12"
+    }
+  }, {
+    "label" : "Inline",
+    "name" : "inline",
+    "type" : "boolean",
+    "defaultValue" : false,
+    "bond" : "constant"
+  }, {
+    "label" : "Available values",
+    "name" : "availableValues",
+    "caption" : "Comma-separated list or bound an array data",
+    "type" : "collection",
+    "defaultValue" : [ "yes", "no" ],
+    "bond" : "expression"
+  }, {
+    "label" : "Displayed key",
+    "name" : "displayedKey",
+    "help" : "The name of the key to use as label. Can be empty",
+    "type" : "text",
+    "bond" : "expression"
+  }, {
+    "label" : "Returned key",
+    "name" : "returnedKey",
+    "caption" : "Value must be unique",
+    "help" : "The name of the key to use as value. Leave it empty for whole object",
+    "type" : "text",
+    "bond" : "expression"
+  }, {
+    "label" : "Selected Value",
+    "name" : "selectedValue",
+    "type" : "text",
+    "bond" : "variable"
+  } ],
+  "assets" : [ ],
+  "requiredModules" : [ ],
+  "type" : "widget",
+  "hasHelp" : false
+}
