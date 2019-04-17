@@ -9,6 +9,7 @@ plugins {
 repositories {
     mavenLocal()
     jcenter()
+    maven("http://repositories.rd.lan/maven/all/")
 }
 
 dependencies {

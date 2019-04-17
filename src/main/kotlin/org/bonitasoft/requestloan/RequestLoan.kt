@@ -3,7 +3,7 @@ package org.bonitasoft.requestloan
 import bonita.connector.email.email
 import org.bonitasoft.engine.dsl.process.*
 import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.constant
-import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.contract
+import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.contractValue
 import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.dataRef
 import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.groovy
 import org.bonitasoft.engine.dsl.process.ExpressionDSLBuilder.ExpressionDSLBuilderObject.parameter
@@ -35,8 +35,8 @@ class RequestLoan : BonitaProcessBuilder {
                 text named "reason" withDescription "why the loan was accepted/rejected"
             }
             operations {
-                update("accepted").with(contract("accept"))
-                update("reason").with(contract("reason"))
+                update("accepted").with(contractValue("accept"))
+                update("reason").with(contractValue("reason"))
             }
         }
         val gate = exclusiveGateway("isAccepted")
