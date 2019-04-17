@@ -16,7 +16,6 @@ import org.bonitasoft.engine.spring.annotations.BonitaProcess
 @BonitaProcess
 class RequestLoan : BonitaProcessBuilder {
     override fun build(): Process = process("Request Loan", "1.0") {
-        parameters("smtpHost")
         val requester = initiator("requester")
         val validator = actor("validator")
         data {
@@ -77,7 +76,6 @@ class RequestLoan : BonitaProcessBuilder {
             gate to sign withCondition dataRef("accepted")
             (gate to notify).isDefault()
         }
-
     }
 
     override fun configuration(): ProcessConfiguration = configuration {
