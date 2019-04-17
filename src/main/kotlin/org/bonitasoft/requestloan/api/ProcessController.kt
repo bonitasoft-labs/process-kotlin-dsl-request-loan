@@ -12,7 +12,7 @@ class ProcessController(val apiClient: APIClient) {
 
     @GetMapping("/processes")
     fun list(): List<ProcessDeploymentInfo> {
-        return apiClient.processAPI.searchProcessDeploymentInfosCanBeStartedBy(apiClient.session.userId, SearchOptionsBuilder(0, 100).done()).result
+        return apiClient.processAPI.searchProcessDeploymentInfosCanBeStartedBy(apiClient.loggedUserId(), allResults).result
     }
 
 }

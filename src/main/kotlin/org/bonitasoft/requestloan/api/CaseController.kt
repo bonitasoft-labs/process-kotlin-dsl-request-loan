@@ -2,8 +2,6 @@ package org.bonitasoft.requestloan.api
 
 import org.bonitasoft.engine.api.APIClient
 import org.bonitasoft.engine.bpm.process.ProcessInstance
-import org.bonitasoft.engine.search.SearchOptionsBuilder
-import org.bonitasoft.requestloan.api.ContractHelper.convertContract
 import org.springframework.web.bind.annotation.*
 
 
@@ -12,15 +10,21 @@ class CaseController(val apiClient: APIClient) {
 
     @GetMapping("/cases")
     fun list(): List<ProcessInstance> {
-        return apiClient.processAPI.searchOpenProcessInstancesInvolvingUser(apiClient.session.userId, SearchOptionsBuilder(0, 100).done()).result
+        return apiClient.processAPI
+                .searchOpenProcessInstancesInvolvingUser(apiClient.loggedUserId(), allResults)
+                .result
     }
 
     @PostMapping("/case/start/{name}/{version}")
     fun start(@PathVariable name: String,
               @PathVariable version: String,
               @RequestBody contract: Map<String, String>) {
-        val processDefinitionId = apiClient.processAPI.getProcessDefinitionId(name, version)
-        apiClient.processAPI.startProcessWithInputs(processDefinitionId, convertContract(contract, apiClient.processAPI.getProcessContract(processDefinitionId)))
+        apiClient.processAPI.apply {
+            val processDefinitionId = getProcessDefinitionId(name, version)
+            val processContract = getProcessContract(processDefinitionId)
+            startProcessWithInputs(processDefinitionId, contract.typed(processContract))
+        }
+
     }
 
 
