@@ -20,17 +20,19 @@ class RequestLoan {
     fun requestLoanProcess(): BusinessArchive {
 
         val processDefinition = process("Request Loan", "1.0") {
+            initiator("requester")
+            actor("validator")
 
+            data {
+                text("type")
+                integer("amount")
+                boolean("accepted")
+            }
         }
 
         val builder = ProcessDefinitionBuilder().createNewInstance("Request Loan", "1.0")
 
-        builder.setActorInitiator("requester")
-        builder.addActor("validator")
-        builder.addData("type", "java.lang.Integer", null)
-        builder.addData("amount", "java.lang.Integer", null)
-        builder.addData("accepted", "java.lang.Boolean", null)
-        builder.addData("reason", "java.lang.String", null)
+
 
         val contractBuilder = builder.addContract()
         contractBuilder.addInput("type", Type.TEXT, "type of the loan")
