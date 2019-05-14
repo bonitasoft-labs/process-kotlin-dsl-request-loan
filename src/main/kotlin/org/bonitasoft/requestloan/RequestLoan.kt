@@ -9,6 +9,7 @@ import org.bonitasoft.engine.bpm.flownode.GatewayType
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder
 import org.bonitasoft.engine.expression.ExpressionBuilder
 import org.bonitasoft.engine.operation.OperationBuilder
+import org.bonitasoft.requestloan.dsl.process
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -17,6 +18,10 @@ class RequestLoan {
 
     @Bean
     fun requestLoanProcess(): BusinessArchive {
+
+        val processDefinition = process("Request Loan", "1.0") {
+
+        }
 
         val builder = ProcessDefinitionBuilder().createNewInstance("Request Loan", "1.0")
 
@@ -52,10 +57,9 @@ class RequestLoan {
         builder.addDefaultTransition("isAccepted", "Notify reject")
 
 
-        val designProcessDefinition = builder.done()
 
         val businessArchiveBuilder = BusinessArchiveBuilder().createNewBusinessArchive()
-        businessArchiveBuilder.setProcessDefinition(designProcessDefinition)
+        businessArchiveBuilder.setProcessDefinition(processDefinition)
         businessArchiveBuilder.actorMapping = ActorMapping().apply {
             addActor(Actor("requester").apply {
                 addUser("john")
