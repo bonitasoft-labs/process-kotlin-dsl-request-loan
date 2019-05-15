@@ -41,15 +41,9 @@ class RequestLoan {
                     update("reason").withStringContractValue("reason")
                 }
             }
-            userTask("Sign contract", requester){
-
-            }
-            exclusiveGateway("isAccepted") {
-
-            }
-            automaticTask("Notify reject") {
-
-            }
+            userTask("Sign contract", requester)
+            exclusiveGateway("isAccepted")
+            automaticTask("Notify reject")
             transitions {
                 normal().from("Review request").to("isAccepted")
                 conditional("accepted").from("isAccepted").to("Sign contract")

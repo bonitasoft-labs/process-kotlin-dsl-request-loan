@@ -30,11 +30,11 @@ class BonitaProcess(val name: String, val version: String) {
 
     fun data(init: DataContainer.() -> Unit) = DataContainer(builder).init()
     fun contract(init: ContractContainer.() -> Unit) = ContractContainer(builder.addContract()).init()
-    fun userTask(name: String, actor: ActorRef, init: UserTaskContainer.() -> Unit) =
+    fun userTask(name: String, actor: ActorRef, init: UserTaskContainer.() -> Unit = {}) =
             UserTaskContainer(builder.addUserTask(name, actor.name)).init()
-    fun exclusiveGateway(name: String, init: FlowNodeContainer.() -> Unit) =
+    fun exclusiveGateway(name: String, init: FlowNodeContainer.() -> Unit = {}) =
             FlowNodeContainer(builder.addGateway(name, GatewayType.EXCLUSIVE)).init()
-    fun automaticTask(name: String, init: FlowNodeContainer.() -> Unit) =
+    fun automaticTask(name: String, init: FlowNodeContainer.() -> Unit = {}) =
             FlowNodeContainer(builder.addAutomaticTask(name)).init()
     fun transitions(init: TransitionContainer.() -> Unit) = TransitionContainer(builder).init()
 
