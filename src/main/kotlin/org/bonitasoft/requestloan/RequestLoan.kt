@@ -27,27 +27,27 @@ class RequestLoan {
             }
 
             contract {
-                text("type").describedAs("type of the loan")
-                integer("amount").describedAs("amount of the loan")
+                text("type") describedAs "type of the loan"
+                integer("amount") describedAs "amount of the loan"
             }
 
             userTask("Review request", validator) {
                 contract {
-                    boolean("accept").describedAs("whether the load is accepted or not")
-                    text("reason").describedAs("why the loan was accepted/rejected")
+                    boolean("accept") describedAs "whether the load is accepted or not"
+                    text("reason") describedAs "why the loan was accepted/rejected"
                 }
                 operations {
-                    update("accepted").withBooleanContractValue("accept")
-                    update("reason").withStringContractValue("reason")
+                    update("accepted") withBooleanContractValue "accept"
+                    update("reason") withStringContractValue "reason"
                 }
             }
             userTask("Sign contract", requester)
             exclusiveGateway("isAccepted")
             automaticTask("Notify reject")
             transitions {
-                normal().from("Review request").to("isAccepted")
-                conditional("accepted").from("isAccepted").to("Sign contract")
-                default().from("isAccepted").to("Notify reject")
+                normal() from "Review request" to "isAccepted"
+                conditional("accepted") from "isAccepted" to "Sign contract"
+                default() from "isAccepted" to "Notify reject"
             }
 
         }
@@ -55,8 +55,8 @@ class RequestLoan {
         return businessArchive {
             process = processDefinition
             actorMapping {
-                actor("requester").mappedToUser("john")
-                actor("validator").mappedToUser("jack")
+                actor("requester") mappedToUser "john"
+                actor("validator") mappedToUser "jack"
             }
         }
     }

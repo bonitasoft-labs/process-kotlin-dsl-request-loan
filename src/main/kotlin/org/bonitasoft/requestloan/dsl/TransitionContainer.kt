@@ -22,12 +22,12 @@ class TransitionBuilder(val builder: ProcessDefinitionBuilder, val type: Transit
 
     var source: String = ""
 
-    fun from(source: String): TransitionBuilder {
+    infix fun from(source: String): TransitionBuilder {
         this.source = source
         return this
     }
 
-    fun to(target: String) {
+    infix fun to(target: String) {
         when (type) {
             TransitionType.NORMAL ->
                 builder.addTransition(source, target)

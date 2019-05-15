@@ -13,7 +13,7 @@ class ContractContainer(val builder: ContractDefinitionBuilder) {
 
 class ContractInputContainer(val builder: ContractDefinitionBuilder, val name: String, val type: Type) {
 
-    fun describedAs(description: String) {
+    infix fun describedAs(description: String) {
         builder.addInput(name, type, description)
     }
 

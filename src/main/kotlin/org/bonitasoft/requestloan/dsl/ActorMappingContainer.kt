@@ -8,5 +8,5 @@ class ActorMappingContainer(private val actorMapping: ActorMapping) {
 }
 
 class ActorMappingBuilder(var actorMapping: ActorMapping, var name: String) {
-    fun mappedToUser(userName: String) = actorMapping.addActor(Actor(name).apply { addUser(userName) })
+    infix fun mappedToUser(userName: String) = actorMapping.addActor(Actor(name).apply { addUser(userName) })
 }

@@ -10,8 +10,8 @@ class OperationContainer(val userTaskBuilder: UserTaskDefinitionBuilder) {
 
 class OperationBuilder(val userTaskBuilder: UserTaskDefinitionBuilder, val dataName: String) {
 
-    fun withBooleanContractValue(contractName: String) = withContractValue(contractName, "java.lang.Boolean")
-    fun withStringContractValue(contractName: String) = withContractValue(contractName, "java.lang.String")
+    infix fun withBooleanContractValue(contractName: String) = withContractValue(contractName, "java.lang.Boolean")
+    infix fun withStringContractValue(contractName: String) = withContractValue(contractName, "java.lang.String")
     fun withContractValue(contractName: String, type: String) {
         userTaskBuilder.addOperation(
                 org.bonitasoft.engine.operation.OperationBuilder()
