@@ -4,6 +4,9 @@ import org.bonitasoft.engine.bpm.bar.actorMapping.Actor
 import org.bonitasoft.engine.bpm.bar.actorMapping.ActorMapping
 
 class ActorMappingContainer(private val actorMapping: ActorMapping) {
+
+    infix fun String.mappedToUser(userName: String) = actor(this).mappedToUser(userName)
+
     fun actor(name: String): ActorMappingBuilder = ActorMappingBuilder(actorMapping, name)
 }
 

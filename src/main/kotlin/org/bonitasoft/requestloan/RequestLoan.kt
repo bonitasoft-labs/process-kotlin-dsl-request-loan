@@ -55,8 +55,8 @@ class RequestLoan {
         return businessArchive {
             process = processDefinition
             actorMapping {
-                actor("requester") mappedToUser "john"
-                actor("validator") mappedToUser "jack"
+                "requester" mappedToUser "john"
+                "validator" mappedToUser "jack"
             }
         }
     }
