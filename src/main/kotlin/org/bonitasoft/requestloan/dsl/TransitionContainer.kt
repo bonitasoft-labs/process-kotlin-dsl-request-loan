@@ -9,17 +9,12 @@ enum class TransitionType {
 
 class TransitionContainer(val builder: ProcessDefinitionBuilder) {
 
-    fun normal(): TransitionBuilder {
-        return TransitionBuilder(builder, TransitionType.NORMAL)
-    }
+    fun normal(): TransitionBuilder = TransitionBuilder(builder, TransitionType.NORMAL)
 
-    fun conditional(dataName: String): TransitionBuilder {
-        return TransitionBuilder(builder, TransitionType.CONDITIONAL, dataName)
-    }
+    fun conditional(dataName: String): TransitionBuilder =
+            TransitionBuilder(builder, TransitionType.CONDITIONAL, dataName)
 
-    fun default(): TransitionBuilder {
-        return TransitionBuilder(builder, TransitionType.DEFAULT)
-    }
+    fun default(): TransitionBuilder = TransitionBuilder(builder, TransitionType.DEFAULT)
 
 }
 

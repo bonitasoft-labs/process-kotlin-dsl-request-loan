@@ -6,15 +6,9 @@ import org.bonitasoft.engine.bpm.process.impl.ContractDefinitionBuilder
 @ProcessDSLMarker
 class ContractContainer(val builder: ContractDefinitionBuilder) {
 
-    fun text(name: String): ContractInputContainer {
-        return ContractInputContainer(builder, name, Type.TEXT)
-    }
-    fun boolean(name: String): ContractInputContainer {
-        return ContractInputContainer(builder, name, Type.BOOLEAN)
-    }
-    fun integer(name: String): ContractInputContainer {
-        return ContractInputContainer(builder, name, Type.INTEGER)
-    }
+    fun text(name: String): ContractInputContainer = ContractInputContainer(builder, name, Type.TEXT)
+    fun boolean(name: String): ContractInputContainer = ContractInputContainer(builder, name, Type.BOOLEAN)
+    fun integer(name: String): ContractInputContainer = ContractInputContainer(builder, name, Type.INTEGER)
 }
 
 class ContractInputContainer(val builder: ContractDefinitionBuilder, val name: String, val type: Type) {

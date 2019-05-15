@@ -7,11 +7,7 @@ import org.bonitasoft.engine.bpm.process.impl.UserTaskDefinitionBuilder
 class UserTaskContainer(val userTaskBuilder: UserTaskDefinitionBuilder) : FlowNodeContainer(userTaskBuilder) {
 
 
-    fun contract(init: ContractContainer.() -> Unit) {
-        ContractContainer(userTaskBuilder.addContract()).init()
-    }
+    fun contract(init: ContractContainer.() -> Unit) = ContractContainer(userTaskBuilder.addContract()).init()
 
-    fun operations(init: OperationContainer.() -> Unit) {
-        OperationContainer(userTaskBuilder).init()
-    }
+    fun operations(init: OperationContainer.() -> Unit) = OperationContainer(userTaskBuilder).init()
 }

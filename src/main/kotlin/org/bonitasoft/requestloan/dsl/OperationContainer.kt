@@ -5,9 +5,7 @@ import org.bonitasoft.engine.expression.ExpressionBuilder
 
 @ProcessDSLMarker
 class OperationContainer(val userTaskBuilder: UserTaskDefinitionBuilder) {
-    fun update(dataName: String): OperationBuilder {
-        return OperationBuilder(userTaskBuilder, dataName)
-    }
+    fun update(dataName: String): OperationBuilder = OperationBuilder(userTaskBuilder, dataName)
 }
 
 class OperationBuilder(val userTaskBuilder: UserTaskDefinitionBuilder, val dataName: String) {

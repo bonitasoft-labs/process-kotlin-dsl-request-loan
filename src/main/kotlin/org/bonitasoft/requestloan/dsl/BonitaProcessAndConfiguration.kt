@@ -5,11 +5,8 @@ import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder
 import org.bonitasoft.engine.bpm.bar.actorMapping.ActorMapping
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition
 
-fun businessArchive(init: BonitaProcessAndConfiguration.() -> Unit): BusinessArchive {
-    val bar = BonitaProcessAndConfiguration(BusinessArchiveBuilder().createNewBusinessArchive())
-    bar.init()
-    return bar.build()
-}
+fun businessArchive(init: BonitaProcessAndConfiguration.() -> Unit): BusinessArchive =
+        BonitaProcessAndConfiguration(BusinessArchiveBuilder().createNewBusinessArchive()).apply(init).build()
 
 @ProcessDSLMarker
 class BonitaProcessAndConfiguration(private val businessArchiveBuilder: BusinessArchiveBuilder) {
@@ -18,9 +15,7 @@ class BonitaProcessAndConfiguration(private val businessArchiveBuilder: Business
             businessArchiveBuilder.setProcessDefinition(value)
         }
 
-    fun build(): BusinessArchive {
-       return businessArchiveBuilder.done()
-    }
+    fun build(): BusinessArchive = businessArchiveBuilder.done()
 
     fun actorMapping(init: ActorMappingContainer.() -> Unit) {
         val actorMapping = ActorMapping()
