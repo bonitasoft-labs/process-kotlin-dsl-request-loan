@@ -44,32 +44,6 @@ class RequestLoan : BonitaProcessBuilder {
             actor = requester
         }
         val notify = automaticTask("Notify reject") {
-            connector {
-                email {
-                    smtpHost(parameter("smtpHost"))
-                    smtpPort(constant(2525))
-                    from(constant("no-reply@acme.com"))
-                    to(groovy("""
-                                |def userId = apiAccessor.getProcessAPI().getProcessInstance(processInstanceId).getStartedBy()
-                                |return apiAccessor.getIdentityAPI().getUserWithProfessionalDetails(userId).contactData.email
-                            """.trimMargin()) {
-                        dependency(ExpressionDSLBuilder().apply { engineConstant(ExpressionConstants.PROCESS_INSTANCE_ID) })
-                        dependency(ExpressionDSLBuilder().apply { engineConstant(ExpressionConstants.API_ACCESSOR) })
-                    })
-                    subject(constant("Your loan was rejected"))
-                    message(stringSubstitution("""
-                        |
-                        | We are sorry to inform you that your Loan was rejected because:
-                        | ${'$'}{reason}
-                        |
-                        | Thank you
-                        |
-                    """.trimMargin()) {
-                        dataRef("reason")
-                    })
-                    sslSupport(constant(false))
-                }
-            }
         }
         transitions {
             review to gate

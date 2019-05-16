@@ -15,7 +15,6 @@ repositories {
 dependencies {
     implementation("org.bonitasoft.engine.dsl:process-kotlin-dsl:0.0.1")
     implementation("org.bonitasoft.engine:bonita-engine-spring-boot-starter:0.0.1")
-    implementation("org.bonitasoft.connectors:bonita-connector-email-dsl:1.1.0")
 
     implementation("org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
