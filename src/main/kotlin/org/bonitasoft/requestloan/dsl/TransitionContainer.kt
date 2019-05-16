@@ -9,6 +9,9 @@ enum class TransitionType {
 
 class TransitionContainer(val builder: ProcessDefinitionBuilder) {
 
+    val normal get() = normal()
+    val default get() = default()
+
     fun normal(): TransitionBuilder = TransitionBuilder(builder, TransitionType.NORMAL)
 
     fun conditional(dataName: String): TransitionBuilder =

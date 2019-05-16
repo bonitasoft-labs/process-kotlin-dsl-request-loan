@@ -5,9 +5,15 @@ import org.bonitasoft.engine.expression.ExpressionBuilder
 
 @ProcessDSLMarker
 class OperationContainer(val userTaskBuilder: UserTaskDefinitionBuilder) {
+
+    val update get() = OperationDeclaration(userTaskBuilder)
+
     fun update(dataName: String): OperationBuilder = OperationBuilder(userTaskBuilder, dataName)
 }
 
+class OperationDeclaration(val userTaskBuilder: UserTaskDefinitionBuilder) {
+    infix fun data(dataName: String) = OperationBuilder(userTaskBuilder, dataName)
+}
 class OperationBuilder(val userTaskBuilder: UserTaskDefinitionBuilder, val dataName: String) {
 
     infix fun withBooleanContractValue(contractName: String) = withContractValue(contractName, "java.lang.Boolean")

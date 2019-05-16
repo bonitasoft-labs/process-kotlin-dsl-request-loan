@@ -20,34 +20,34 @@ class RequestLoan {
             val validator = actor("validator")
 
             data {
-                text("type")
-                integer("amount")
-                boolean("accepted")
-                text("reason")
+                text named "type"
+                integer named "amount"
+                boolean named "accepted"
+                text named "reason"
             }
 
             contract {
-                text("type") describedAs "type of the loan"
-                integer("amount") describedAs "amount of the loan"
+                text named "type" describedAs "type of the loan"
+                integer named "amount" describedAs "amount of the loan"
             }
 
             userTask("Review request", validator) {
                 contract {
-                    boolean("accept") describedAs "whether the load is accepted or not"
-                    text("reason") describedAs "why the loan was accepted/rejected"
+                    boolean named "accept" describedAs "whether the load is accepted or not"
+                    text named "reason" describedAs "why the loan was accepted/rejected"
                 }
                 operations {
-                    update("accepted") withBooleanContractValue "accept"
-                    update("reason") withStringContractValue "reason"
+                    update data "accepted" withBooleanContractValue "accept"
+                    update data "reason" withStringContractValue "reason"
                 }
             }
             userTask("Sign contract", requester)
             exclusiveGateway("isAccepted")
             automaticTask("Notify reject")
             transitions {
-                normal() from "Review request" to "isAccepted"
+                normal from "Review request" to "isAccepted"
                 conditional("accepted") from "isAccepted" to "Sign contract"
-                default() from "isAccepted" to "Notify reject"
+                default from "isAccepted" to "Notify reject"
             }
 
         }
