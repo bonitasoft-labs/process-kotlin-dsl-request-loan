@@ -13,7 +13,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.bonitasoft.engine.dsl:process-kotlin-dsl:0.0.1")
     implementation("org.bonitasoft.engine:bonita-engine-spring-boot-starter:0.0.1")
     implementation("org.bonitasoft.connectors:bonita-connector-email-dsl:1.1.0")
 
